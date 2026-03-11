@@ -3,7 +3,7 @@ import { ethers } from 'ethers'
 import { erc20Abi } from './abi/erc20Abi'
 
 // 这里换成你部署后的 ERC20 合约地址
-const CONTRACT_ADDRESS = '0xYourContractAddressHere'
+const CONTRACT_ADDRESS = '0x67d1e772936F199D1776AFfC8C17cF6596EE076a'
 
 export default function ERC20Page() {
   const [account, setAccount] = useState('')
