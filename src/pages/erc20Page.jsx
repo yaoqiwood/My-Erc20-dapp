@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { ethers } from 'ethers'
-import { erc20Abi } from './abi/erc20Abi'
+import { erc20abi } from '../abi/erc20abi'
 
 // 这里换成你部署后的 ERC20 合约地址
 const CONTRACT_ADDRESS = '0x67d1e772936F199D1776AFfC8C17cF6596EE076a'
@@ -14,7 +14,9 @@ export default function ERC20Page() {
 
   async function connectWallet() {
     try {
+      // 在 MetaMask 中连接钱包，这里要理解 在 MetaMask安装之后，插件会在浏览器全局自动挂载一个 ethereum 对象，用于与 MetaMask 进行交互
       if (!window.ethereum) {
+        // 所以可以检测是否有 MetaMask 插件安装
         setStatus('没有检测到 MetaMask')
         return
       }
@@ -37,7 +39,7 @@ export default function ERC20Page() {
     try {
       const provider = providerParam || new ethers.BrowserProvider(window.ethereum)
 
-      const contract = new ethers.Contract(CONTRACT_ADDRESS, erc20Abi, provider)
+      const contract = new ethers.Contract(CONTRACT_ADDRESS, erc20abi, provider)
 
       const [tokenSymbol, tokenDecimals, rawBalance] = await Promise.all([
         contract.symbol(),
@@ -70,7 +72,7 @@ export default function ERC20Page() {
       const provider = new ethers.BrowserProvider(window.ethereum)
       const signer = await provider.getSigner()
 
-      const contract = new ethers.Contract(CONTRACT_ADDRESS, erc20Abi, signer)
+      const contract = new ethers.Contract(CONTRACT_ADDRESS, erc20abi, signer)
 
       const decimals = await contract.decimals()
       const amount = ethers.parseUnits(mintAmount, decimals)
